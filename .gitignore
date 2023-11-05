@@ -1,4 +1,4 @@
 config
-__pyache__
 .idea
 .gitignore
+__pycache__
