@@ -19,9 +19,3 @@ class CountryCity(models.Model):
         unique_together = ('country_id', 'city_id')
 
 
-class Status(models.Model):
-    name = models.CharField(max_length=64, unique=True)
-
-
-class PaymentType(models.Model):
-    name = models.CharField(max_length=64, unique=True)

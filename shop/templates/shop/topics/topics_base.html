@@ -1,0 +1,12 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Cute&Classy - {{ title }}</title>
+{% endblock %}
+
+{% block content %}
+    {% include 'shop/includes/page_header.html' with title=title %}
+    {% block topic-content %}
+    {% endblock %}
+{% endblock %}

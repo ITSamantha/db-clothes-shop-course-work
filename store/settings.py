@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
-import config.local_database
+from configuration import local_database,remote_database
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -107,9 +107,9 @@ else:
 """
 
 if DEBUG:
-    DATABASES = config.local_database.DATABASES
+    DATABASES = local_database.DATABASES
 else:
-    DATABASES = config.remote_database.DATABASES
+    DATABASES = remote_database.DATABASES
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

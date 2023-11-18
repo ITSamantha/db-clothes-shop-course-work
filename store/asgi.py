@@ -1,5 +1,5 @@
 """
-ASGI config for store project.
+ASGI configuration for store project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

@@ -1,5 +1,5 @@
 """
-WSGI config for store project.
+WSGI configuration for store project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
