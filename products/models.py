@@ -75,7 +75,7 @@ class ProductSizeColorCount(models.Model):
 
 
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to='products/product_images/')
+    image = models.ImageField(upload_to='static/img/product_images/')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     default = models.BooleanField(default=False)
 

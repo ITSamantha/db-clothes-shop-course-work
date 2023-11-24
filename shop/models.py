@@ -1,8 +1,6 @@
 from django.db import models
 
 
-# Create your models here.
-
 class Country(models.Model):
     name = models.CharField(max_length=64, unique=True)
 
@@ -17,5 +15,3 @@ class CountryCity(models.Model):
 
     class Meta:
         unique_together = ('country_id', 'city_id')
-
-

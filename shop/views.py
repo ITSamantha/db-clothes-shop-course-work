@@ -13,7 +13,6 @@ def contact(request):
 def topic(request, topic):
     context = {
         'title': topic,
-        'topics': dictionaries.topics.TOPICS,
         'is_invisible': True,
     }
     return render(request, f'shop/topics/{topic}.html', context=context)
