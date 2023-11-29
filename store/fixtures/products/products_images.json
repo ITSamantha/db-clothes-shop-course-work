@@ -1,0 +1,1 @@
+[{"model": "products.productimage", "pk": 1, "fields": {"image": "products/product_images/carousel-2.jpg", "product": 1, "default": false}}, {"model": "products.productimage", "pk": 2, "fields": {"image": "products/product_images/carousel-1.jpg", "product": 1, "default": false}}]

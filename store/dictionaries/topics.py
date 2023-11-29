@@ -1,0 +1,5 @@
+TOPICS = \
+    [
+        'FAQs',
+        'Help',
+        'Support']
