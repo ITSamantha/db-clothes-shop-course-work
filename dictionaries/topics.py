@@ -1,5 +1,0 @@
-TOPICS = \
-    [
-        'FAQs',
-        'Help',
-        'Support']
