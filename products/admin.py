@@ -1,48 +1,29 @@
 from django.contrib import admin
 from products.models import *
-from inlines import *
+from products.inlines import *
+from shop.admin import BaseAdminModel
 
 LIST_PER_PAGE = 10
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-    list_display_links = ('id',)
-    ordering = ['id']
-    list_per_page = LIST_PER_PAGE
-    search_fields = ['name', 'id']
-    show_full_result_count = True
+class CategoryAdmin(BaseAdminModel):
+    pass
 
 
 @admin.register(Gender)
-class GenderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-    list_display_links = ('id',)
-    ordering = ['id']
-    list_per_page = LIST_PER_PAGE
-    search_fields = ['name', 'id']
-    show_full_result_count = True
+class GenderAdmin(BaseAdminModel):
+    pass
 
 
 @admin.register(Size)
-class SizeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-    list_display_links = ('id',)
-    ordering = ['id']
-    list_per_page = LIST_PER_PAGE
-    search_fields = ['name', 'id']
-    show_full_result_count = True
+class SizeAdmin(BaseAdminModel):
+    pass
 
 
 @admin.register(Color)
-class ColorAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-    list_display_links = ('id',)
-    ordering = ['id']
-    list_per_page = LIST_PER_PAGE
-    search_fields = ['name', 'id']
-    show_full_result_count = True
+class ColorAdmin(BaseAdminModel):
+    pass
 
 
 """
@@ -55,14 +36,31 @@ class ProductCategoryGenderAdmin(admin.ModelAdmin):
 """
 
 
-
-
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'price')
-    search_fields = ('name', 'category_gender__category__name', 'category_gender__gender__name')
-    # list_filter = ('category_gender__category', 'category_gender__gender')
+    list_display = \
+        ('id', 'name', 'short_description', 'price')
+
+    list_display_links = ('id',)
+    ordering = ['id']
+    list_per_page = LIST_PER_PAGE
+    show_full_result_count = True
+
+    list_filter = \
+        [
+            'productsizecolor__color__name',
+            'productsizecolor__size__name',
+            'productcategorygender__category__name',
+            'productcategorygender__gender__name'
+        ]
+
+    search_fields = \
+        ['name', 'short_description',
+         'productsizecolor__color__name',
+         'productsizecolor__size__name',
+         'productcategorygender__category__name',
+         'productcategorygender__gender__name',
+         ]
 
     inlines = [
         ProductSizeColorInline,

@@ -2,7 +2,6 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 
-
 class Gender(models.Model):
     name = models.CharField(max_length=10, unique=True, verbose_name='gender')
 
@@ -81,7 +80,7 @@ class ProductCategoryGender(models.Model):
     gender = models.ForeignKey(Gender, on_delete=models.CASCADE, verbose_name='gender')
 
     class Meta:
-        unique_together = ('category', 'gender')
+        unique_together = ('category', 'gender', 'product')
         verbose_name = 'Category & Gender'
         verbose_name_plural = 'Categories & Genders'
 
