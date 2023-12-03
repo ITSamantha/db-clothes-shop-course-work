@@ -2,7 +2,7 @@ from django.db.models import Max, Min
 from django import template
 
 from dictionaries import topics, networks, pages
-from products.models import Product, ProductImage
+# from products.models import Product, ProductImage
 
 register = template.Library()
 

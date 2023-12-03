@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-q(++ug&#_(7e@2rysciqgmmzvy9!%8n!0t#(7#q+5rg)bd$rw9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
@@ -109,7 +109,8 @@ else:
 if DEBUG:
     DATABASES = local_database.DATABASES
 else:
-    DATABASES = remote_database.DATABASES
+    DATABASES = local_database.DATABASES
+# DATABASES = remote_database.DATABASES
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

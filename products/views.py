@@ -2,18 +2,18 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 import products.methods
-from dictionaries import networks, topics
 from dictionaries.features import *
-from products import functions
+from products import methods
 from products.models import *
 
 
 def product_details(request, product_id):
-    print(product_id)
     product_object = Product.objects.get(id=product_id)
+
     context = {
         'product': product_object,
     }
+
     return render(request, 'products/detail.html', context=context)
 
 
@@ -22,10 +22,10 @@ def product_category(request, category):
 
 
 def shop(request):
-    colors_counts = functions.get_colors_counts()
-    sizes_counts = functions.get_sizes_counts()
-    categories_counts = functions.get_categories_counts()
-    products = functions.get_all_products()
+    colors_counts = methods.get_colors_counts()
+    sizes_counts = methods.get_sizes_counts()
+    categories_counts = methods.get_categories_counts()
+    products = methods.get_all_products()
 
     context = {
         'colors_counts': colors_counts,

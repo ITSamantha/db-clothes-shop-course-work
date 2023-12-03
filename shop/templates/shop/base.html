@@ -1,5 +1,6 @@
 {% load static %}
 {% load  shop_simple_tags %}
+{% load  product_simple_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,6 +103,7 @@
             {% block navbar_position %}
             {% endblock %}
             <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                {% get_categories as categories %}
                 {% for category in categories %}
                     <a href="{% url 'products:product_category' category.name.lower %}"
                        class="nav-item nav-link">{{ category.name }}</a>

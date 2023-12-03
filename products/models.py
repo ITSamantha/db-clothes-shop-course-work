@@ -2,93 +2,103 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 
-# Create your models here.
 
 class Gender(models.Model):
-    name = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=10, unique=True, verbose_name='gender')
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
+
+    class Meta:
+        verbose_name = 'Gender'
+        verbose_name_plural = 'Genders'
 
 
 class Size(models.Model):
-    name = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=10, unique=True, verbose_name='size')
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
+
+    class Meta:
+        verbose_name = 'Size'
+        verbose_name_plural = 'Sizes'
 
 
 class Color(models.Model):
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=64, unique=True, verbose_name='color')
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
+
+    class Meta:
+        verbose_name = 'Color'
+        verbose_name_plural = 'Colors'
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=64, unique=True, verbose_name='category')
 
     def __str__(self):
-        return f"{self.name}"
-
-
-class CategoryGender(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    gender = models.ForeignKey(Gender, on_delete=models.CASCADE)
+        return self.name
 
     class Meta:
-        unique_together = ('category', 'gender')
-
-    def __str__(self):
-        return f"{self.category}| {self.gender}"
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=256, unique=True)
-    price = models.FloatField(validators=[MinValueValidator(0)], default=None)
-    short_description = models.CharField(max_length=256, blank=True, null=True)
-    long_description = models.TextField(blank=True, null=True)
-    additional_information = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=256, unique=True, verbose_name='product name')
+    price = models.FloatField(validators=[MinValueValidator(0)], default=None, verbose_name='price')
+    short_description = models.CharField(max_length=256, blank=True, null=True, verbose_name='short description')
+    long_description = models.TextField(blank=True, null=True, verbose_name='long description')
+    additional_information = models.TextField(blank=True, null=True, verbose_name='additional information')
 
     def __str__(self):
-        return f"ID: {self.id}| Название: {self.name}"
-
-
-class ProductSizeColor(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    size = models.ForeignKey(Size, on_delete=models.CASCADE)
-    color = models.ForeignKey(Color, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.product}| Размер:{self.size}| Цвет: {self.color}"
+        return f"{self.id} | {self.name}"
 
     class Meta:
-        unique_together = ('product', 'size', 'color')
-
-
-class ProductSizeColorCount(models.Model):
-    product_size_color = models.ForeignKey(ProductSizeColor, on_delete=models.CASCADE, unique=True)
-    count = models.PositiveIntegerField()
-
-    def __str__(self):
-        return f"{self.product_size_color}| Количество: {self.count}"
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
 
 
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to='product_images/')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    default = models.BooleanField(default=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='product', related_name='images')
+    image = models.ImageField(upload_to='product_images/', null=True, blank=True, verbose_name='image')
+    default = models.BooleanField(default=False, verbose_name='is_default_photo')
 
     def __str__(self):
         return f"{self.product} | {self.image}"
 
+    class Meta:
+        verbose_name = 'Image'
+        verbose_name_plural = 'Images'
+
 
 class ProductCategoryGender(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    category_gender = models.ForeignKey(CategoryGender, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.product}| {self.category_gender}"
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='product')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='category')
+    gender = models.ForeignKey(Gender, on_delete=models.CASCADE, verbose_name='gender')
 
     class Meta:
-        unique_together = ('product', 'category_gender')
+        unique_together = ('category', 'gender')
+        verbose_name = 'Category & Gender'
+        verbose_name_plural = 'Categories & Genders'
+
+    def __str__(self):
+        return f"{self.category} | {self.gender}"
+
+
+class ProductSizeColor(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='product')
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, verbose_name='size', related_name='product_size_colors')
+    color = models.ForeignKey(Color, on_delete=models.CASCADE, verbose_name='color')
+    count = models.PositiveIntegerField(verbose_name='count of product')
+
+    def __str__(self):
+        return f"{self.size} | {self.color}"
+
+    class Meta:
+        unique_together = ('size', 'color', 'product')
+        verbose_name = 'Size & Color'
+        verbose_name_plural = 'Sizes & Colors'

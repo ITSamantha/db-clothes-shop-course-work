@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from products.models import Product
 
-
 """
 class User(AbstractUser):
     image = models.ImageField(upload_to='users_images/', null=True, blank=True)
@@ -13,7 +12,10 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
-
+    
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
 
 class Review(models.Model):
     rating = models.FloatField(validators=[
@@ -27,4 +29,8 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.date} | {self.user_id} | {self.product_id}"
+    
+    class Meta:
+        verbose_name = 'Review'
+        verbose_name_plural = 'Reviews'
 """

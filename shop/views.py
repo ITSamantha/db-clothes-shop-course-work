@@ -16,3 +16,12 @@ def topic(request, topic):
         'is_invisible': True,
     }
     return render(request, f'shop/topics/{topic}.html', context=context)
+
+
+# Error views
+def page_not_found(request, exception):
+    return render(request, 'shop/errors/error404.html')
+
+
+def server_error(request, exception):
+    return render(request, 'shop/errors/error500.html')

@@ -1,6 +1,7 @@
 {% extends 'shop/base.html' %}
 {% load static %}
 {% load product_simple_tags %}
+{% load shop_simple_tags %}
 {% block title %}
     <title>Cute&Classy - Shop</title>
 {% endblock %}
@@ -74,10 +75,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 pb-1" id="products-container">
-                        {% include 'products/includes/shop_products.html' with products=products %}
-                    </div>
-
+                </div>
+                <div class="row pb-3" id="products-container">
+                    {% include 'products/includes/shop_products.html' with products=products %}
                 </div>
             </div>
             <!-- Shop Product End -->

@@ -1,7 +1,7 @@
 from django import template
 
 import products.methods
-from products.models import Product, ProductImage
+from products.models import *
 
 register = template.Library()
 
@@ -40,3 +40,9 @@ def get_product_sizes(product):
 def get_product_colors(product):
     colors = products.methods.get_product_colors(product)
     return colors
+
+
+@register.simple_tag()
+def get_categories():
+    categories = Category.objects.all()
+    return categories
