@@ -1,5 +1,10 @@
-$(document).on('change', 'form#filter-form input[type="checkbox"]', function () {
+$(document).ready(function () {
 
+    handleFilterChange();
+    $(document).on('change', 'form#filter-form input[type="checkbox"]', handleFilterChange);
+});
+
+function handleFilterChange() {
     var formData = $('#filter-form').serialize();
     console.log('FormData:', formData);
 
@@ -14,4 +19,6 @@ $(document).on('change', 'form#filter-form input[type="checkbox"]', function () 
             console.log(error);
         }
     });
-});
+}
+
+

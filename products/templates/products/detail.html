@@ -61,7 +61,7 @@
                 <h3 class="font-weight-semi-bold mb-4">${{ product.price }}</h3>
                 <p class="mb-4">{{ product.short_description }}</p>
 
-                {% get_product_sizes product.id as sizes %}
+                {% get_product_size_color_count_info product.id as product_info %}
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
                     <form>
@@ -75,7 +75,6 @@
                         {% endfor %}
                     </form>
                 </div>
-                <!--AJAX-->
                 {% get_product_colors product.id as colors %}
                 <div class="d-flex mb-4">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
@@ -93,6 +92,39 @@
                 <div class="d-flex mb-4">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Available count: 1</p>
                 </div>
+                <!--
+                {% get_product_sizes product.id as sizes %}
+                <div class="d-flex mb-3">
+                    <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+                    <form>
+                        {% for size in sizes %}
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input"
+                                       id="size-{{ size.size__id }}" name="size">
+                                <label class="custom-control-label"
+                                       for="size-{{ size.size__id }}">{{ size.size__name }}</label>
+                            </div>
+                        {% endfor %}
+                    </form>
+                </div>
+                {% get_product_colors product.id as colors %}
+                <div class="d-flex mb-4">
+                    <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+                    <form>
+                        {% for color in colors %}
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="color-{{ color.color__id }}"
+                                       name="color">
+                                <label class="custom-control-label"
+                                       for="color-{{ color.color__id }}">{{ color.color__name }}</label>
+                            </div>
+                        {% endfor %}
+                    </form>
+                </div>
+                <div class="d-flex mb-4">
+                    <p class="text-dark font-weight-medium mb-0 mr-3">Available count: 1</p>
+                </div>
+                -->
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">

@@ -45,4 +45,17 @@ def get_product_colors(product):
 @register.simple_tag()
 def get_categories():
     categories = Category.objects.all()
+    print()
+    return categories
+
+
+@register.simple_tag()
+def get_product_size_color_count_info(product):
+    result = products.methods.get_product_size_color_count(product)
+    return result
+
+
+@register.simple_tag()
+def get_categories_counts():
+    categories = products.methods.get_categories_counts()
     return categories

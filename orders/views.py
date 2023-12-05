@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 import dictionaries.topics
 import dictionaries.networks
-from dictionaries.features import FEATURES, CATEGORIES_GENERAL
+from dictionaries.features import FEATURES
 from products.models import Category
 
 

@@ -41,9 +41,6 @@ def index(request):
     categories = Category.objects.all()
 
     context = {
-        'features': FEATURES,
-        'general_categories': CATEGORIES_GENERAL,
-        'sales': SALES,
         'vendors': VENDORS,
         'categories': categories,
     }

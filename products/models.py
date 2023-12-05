@@ -37,6 +37,8 @@ class Color(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True, verbose_name='category')
+    image = models.ImageField(upload_to='categories_images/', default='categories_images/default.jpeg',
+                              verbose_name='image')
 
     def __str__(self):
         return self.name
