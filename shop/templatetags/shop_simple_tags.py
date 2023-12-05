@@ -1,9 +1,6 @@
-from django.db.models import Max, Min
 from django import template
 
-from dictionaries import topics, networks, pages, features
-
-# from products.models import Product, ProductImage
+from dictionaries import topics, networks, pages, features, vendors
 
 register = template.Library()
 
@@ -26,3 +23,8 @@ def get_pages():
 @register.simple_tag()
 def get_features():
     return features.FEATURES
+
+
+@register.simple_tag()
+def get_vendors():
+    return vendors.VENDORS

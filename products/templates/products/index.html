@@ -58,18 +58,6 @@
     {% include 'products/includes/products.html' with title='Just arrived' %}
 
     <!-- Vendor Start -->
-    <div class="container-fluid py-5">
-        <div class="row px-xl-5">
-            <div class="col">
-                <div class="owl-carousel vendor-carousel">
-                    {% for vendor in vendors %}
-                        <div class="vendor-item border p-4">
-                            <img src={% static vendor %} alt="">
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'shop/includes/vendors.html' %}
     <!-- Vendor End -->
 {% endblock %}

@@ -41,7 +41,6 @@ def index(request):
     categories = Category.objects.all()
 
     context = {
-        'vendors': VENDORS,
         'categories': categories,
     }
 
