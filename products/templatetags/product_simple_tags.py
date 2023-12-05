@@ -20,7 +20,7 @@ def min_product_price():
 
 @register.simple_tag()
 def get_product_images(product_id):
-    images = ProductImage.objects.filter(product__id=product_id, default=False)
+    images = ProductImage.objects.filter(product__id=product_id)
     return images
 
 

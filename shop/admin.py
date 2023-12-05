@@ -1,17 +1,5 @@
-from django.contrib import admin
-from shop.models import *
+from core.admin import BaseAdminModel, LIST_PER_PAGE
 from shop.inlines import *
-
-LIST_PER_PAGE = 10
-
-
-class BaseAdminModel(admin.ModelAdmin):
-    list_display = ('id', 'name')
-    list_display_links = ('id',)
-    ordering = ['id']
-    list_per_page = LIST_PER_PAGE
-    search_fields = ['name', 'id']
-    show_full_result_count = True
 
 
 @admin.register(City)

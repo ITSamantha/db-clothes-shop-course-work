@@ -1,7 +1,13 @@
 from django.contrib import admin
 from orders.models import *
+from shop.admin import BaseAdminModel
 
-# Register your models here.
 
-admin.site.register(Status)
-admin.site.register(PaymentType)
+@admin.register(Status)
+class StatusAdmin(BaseAdminModel):
+    pass
+
+
+@admin.register(PaymentType)
+class PaymentTypeAdmin(BaseAdminModel):
+    pass

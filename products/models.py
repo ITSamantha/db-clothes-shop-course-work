@@ -63,8 +63,7 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='product', related_name='images')
-    image = models.ImageField(upload_to='product_images/', null=True, blank=True, verbose_name='image')
-    default = models.BooleanField(default=False, verbose_name='is_default_photo')
+    image = models.ImageField(upload_to='product_images/', verbose_name='image', default='img/default-product.png')
 
     def __str__(self):
         return f"{self.product} | {self.image}"
@@ -90,7 +89,7 @@ class ProductCategoryGender(models.Model):
 
 class ProductSizeColor(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='product')
-    size = models.ForeignKey(Size, on_delete=models.CASCADE, verbose_name='size', related_name='product_size_colors')
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, verbose_name='size', related_name='size')
     color = models.ForeignKey(Color, on_delete=models.CASCADE, verbose_name='color')
     count = models.PositiveIntegerField(verbose_name='count of product')
 

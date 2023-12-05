@@ -14,20 +14,18 @@ def get_min_product_price():
 
 
 def get_product_size_color_count_info(product):
-    sizes = ProductSizeColorCount.objects.filter(product_size_color__product=product)
+    sizes = ProductSizeColor.objects.filter(product_size_color__product=product)
     return sizes
 
 
 def get_product_sizes(product):
-    sizes = ProductSizeColorCount.objects.annotate(
-        size=F('product_size_color__size__name')).filter(product_size_color__product=product).values('size').distinct()
+    sizes = ProductSizeColor.objects.filter(product=product).values('size__name', 'size__id').distinct()
     return sizes
 
 
 def get_product_colors(product):
-    colors = ProductSizeColorCount.objects.annotate(
-        color=F('product_size_color__color__name')).filter(product_size_color__product=product).values(
-        'color').distinct()
+    colors = ProductSizeColor.objects.filter(product=product).values('color__name', 'color__id'
+                                                                     ).distinct()
     return colors
 
 
@@ -36,9 +34,9 @@ def filter_products(colors=None, categories=None, sizes=None):
     if colors is not None:
         products = Product.objects.filter(productsizecolor__color__id__in=colors)
     if categories is not None:
-        products = Product.objects.filter(productcategorygender__category_gender__category__id__in=categories)
+        products += Product.objects.filter(productcategorygender__category_gender__category__id__in=categories)
     if sizes is not None:
-        products = Product.objects.filter(productsizecolor__size__id__in=sizes)
+        products += Product.objects.filter(productsizecolor__size__id__in=sizes)
     products = products.distinct() if products else Product.objects.all()
     return products
 
@@ -59,8 +57,8 @@ def get_sizes_counts():
 
 
 def get_categories_counts():
-    categories_counts = ProductCategoryGender.objects.values(name=F('category_gender__category__name'),
-                                                             column_id=F('category_gender__category__id')).annotate(
+    categories_counts = ProductCategoryGender.objects.values(name=F('category__name'),
+                                                             column_id=F('category__id')).annotate(
         Count("product", distinct=True))
     return categories_counts
 

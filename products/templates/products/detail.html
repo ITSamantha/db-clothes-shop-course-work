@@ -1,4 +1,4 @@
-{% extends 'shop/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load product_simple_tags %}
 {% load shop_simple_tags %}
@@ -68,9 +68,9 @@
                         {% for size in sizes %}
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input"
-                                       id="{{ size.size }}" name="size">
+                                       id="size-{{ size.size__id }}" name="size">
                                 <label class="custom-control-label"
-                                       for="{{ size.size }}">{{ size.size }}</label>
+                                       for="size-{{ size.size__id }}">{{ size.size__name }}</label>
                             </div>
                         {% endfor %}
                     </form>
@@ -82,10 +82,10 @@
                     <form>
                         {% for color in colors %}
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="{{ color.color }}"
+                                <input type="radio" class="custom-control-input" id="color-{{ color.color__id }}"
                                        name="color">
                                 <label class="custom-control-label"
-                                       for="{{ color.color }}">{{ color.color }}</label>
+                                       for="color-{{ color.color__id }}">{{ color.color__name }}</label>
                             </div>
                         {% endfor %}
                     </form>

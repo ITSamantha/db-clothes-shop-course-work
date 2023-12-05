@@ -1,9 +1,5 @@
-from django.contrib import admin
-from products.models import *
 from products.inlines import *
-from shop.admin import BaseAdminModel
-
-LIST_PER_PAGE = 10
+from core.admin import BaseAdminModel, LIST_PER_PAGE
 
 
 @admin.register(Category)
