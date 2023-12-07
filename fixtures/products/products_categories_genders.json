@@ -1,1 +1,0 @@
-[{"model": "products.productcategorygender", "pk": 1, "fields": {"product": 1, "category_gender": 1}}, {"model": "products.productcategorygender", "pk": 2, "fields": {"product": 1, "category_gender": 5}}]

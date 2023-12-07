@@ -1,1 +1,0 @@
-[{"model": "products.productsizecolorcount", "pk": 1, "fields": {"product_size_color": 1, "count": 10}}, {"model": "products.productsizecolorcount", "pk": 2, "fields": {"product_size_color": 2, "count": 355}}]

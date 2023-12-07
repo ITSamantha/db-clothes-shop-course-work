@@ -1,5 +1,6 @@
 from core.admin import BaseAdminModel, LIST_PER_PAGE
 from shop.inlines import *
+from users.models import Subscribe
 
 
 @admin.register(City)
@@ -28,3 +29,6 @@ class CountryCityAdmin(admin.ModelAdmin):
     ]
 
     show_full_result_count = True
+
+
+admin.site.register(Subscribe)

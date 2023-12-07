@@ -12,7 +12,6 @@ def cart(request):
     categories = Category.objects.all()
     context = {
         'features': FEATURES,
-        'general_categories': CATEGORIES_GENERAL,
         'topics': dictionaries.topics.TOPICS,
         'networks': dictionaries.networks.NETWORKS,
         'categories': categories,
@@ -24,7 +23,6 @@ def checkout(request):
     categories = Category.objects.all()
     context = {
         'features': FEATURES,
-        'general_categories': CATEGORIES_GENERAL,
         'topics': dictionaries.topics.TOPICS,
         'networks': dictionaries.networks.NETWORKS,
         'categories': categories,
@@ -36,7 +34,6 @@ def favourites(request):
     categories = Category.objects.all()
     context = {
         'features': FEATURES,
-        'general_categories': CATEGORIES_GENERAL,
         'topics': dictionaries.topics.TOPICS,
         'networks': dictionaries.networks.NETWORKS,
         'categories': categories,

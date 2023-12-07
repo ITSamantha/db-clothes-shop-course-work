@@ -34,3 +34,5 @@ class CountryCity(models.Model):
 
     def __str__(self):
         return f'{self.country}, {self.city}'
+
+

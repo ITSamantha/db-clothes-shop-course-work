@@ -6,8 +6,6 @@ $(document).ready(function () {
 
 function handleFilterChange() {
     var formData = $('#filter-form').serialize();
-    console.log('FormData:', formData);
-
     $.ajax({
         type: 'GET',
         url: '/products/filter_products/',

@@ -15,5 +15,17 @@
 {% block content %}
 
     {% include 'shop/includes/page_header.html' with title='Login' %}
+    <div class="form-padding">
+        <form method="POST" action="{% url 'users:login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p>
+                <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">SUBMIT
+                </button>
+            </p>
+
+        </form>
+    </div>
+
 
 {% endblock %}
