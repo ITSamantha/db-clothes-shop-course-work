@@ -42,15 +42,8 @@ def subscribe(request):
     if request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
-            cleaned_data = form.cleaned_data
-            user_name = cleaned_data['name']
-            user_email = cleaned_data['email']
-            sub = Subscribe(name=user_name, email=user_email)
-            try:
-                sub.save()
-                messages.success(request, 'You successfully subscribed :)')
-            except Exception as e:
-                messages.error(request, 'This email has already been used :(')
+            form.save()
+            messages.success(request, 'You successfully subscribed :)')
     else:
         form = SubscribeForm()
     context = {

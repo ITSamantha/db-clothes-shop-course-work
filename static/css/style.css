@@ -10406,18 +10406,16 @@ a.text-dark:hover, a.text-dark:focus {
     padding-right: 25%;
 }
 
+.message {
+    margin: 3px;
+    font-size: 14px;
+    font-weight: bold;
+}
 
 .message.success {
-    margin: 3px;
-    font-size: 18px;
-    font-weight: bold;
     color: #1e7e34;
 }
 
-
 .message.error {
-    margin: 3px;
-    font-size: 18px;
-    font-weight: bold;
     color: #cb4040;
 }

@@ -38,10 +38,9 @@ class Review(models.Model):
 
 class Subscribe(models.Model):
     name = models.CharField(max_length=128, verbose_name='User Name')
-    email = models.CharField(max_length=128, verbose_name='User Email')
+    email = models.CharField(max_length=128, verbose_name='User Email', unique=True)
 
     class Meta:
-        unique_together = ('name', 'email')
         verbose_name = 'Subscribe'
         verbose_name_plural = 'Subscribes'
 
