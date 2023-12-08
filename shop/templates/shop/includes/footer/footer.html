@@ -1,0 +1,46 @@
+{% load static %}
+{% load shop_simple_tags %}
+
+<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+    <div class="row px-xl-5 pt-5">
+
+        {% include 'shop/includes/footer/shop_info.html' %}
+
+        <div class="col-lg-8 col-md-12">
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        {% get_pages as pages %}
+                        {% for page in pages %}
+                            {% if not forloop.last %}
+                                <a class="text-dark mb-2" href={% url page.url %}><i
+                                        class="fa fa-angle-right mr-2"></i>{{ page.title }}</a>
+                            {% else %}
+                                <a class="text-dark" href={% url page.url %}><i
+                                        class="fa fa-angle-right mr-2"></i>{{ page.title }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5" id="subscribe-col">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row border-top border-light mx-xl-5 py-4">
+        <div class="col-md-6 px-xl-0">
+            <p class="mb-md-0 text-center text-md-left text-dark">
+                &copy; <a class="text-dark font-weight-semi-bold" href="#">Cute&Classy</a>.
+                All Rights Reserved.
+            </p>
+        </div>
+        <div class="col-md-6 px-xl-0 text-center text-md-right">
+            <img class="img-fluid" src={% static "img/payments.png" %} alt=""
+                 style="max-height: 20px;min-height: 20px;">
+        </div>
+    </div>
+</div>

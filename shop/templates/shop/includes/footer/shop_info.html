@@ -1,0 +1,16 @@
+{% load shop_simple_tags %}
+
+{% get_shop_info as shop_info %}
+
+<div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+    <a href="" class="text-decoration-none">
+        <h1 class="m-0 display-5 font-weight-semi-bold" style="font-size: 28px;"><span
+                class="text-primary font-weight-bold border px-3 mr-1">{{ shop_info.abbreviation }}</span>
+            {{ shop_info.name }}
+        </h1>
+    </a>
+    <p style="text-align: justify">{{ shop_info.description }}</p>
+    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>{{ shop_info.address }}</p>
+    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>{{ shop_info.email }}</p>
+    <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>{{ shop_info.phone }}</p>
+</div>

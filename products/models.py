@@ -54,6 +54,7 @@ class Product(models.Model):
     short_description = models.CharField(max_length=256, blank=True, null=True, verbose_name='short description')
     long_description = models.TextField(blank=True, null=True, verbose_name='long description')
     additional_information = models.TextField(blank=True, null=True, verbose_name='additional information')
+    date_create = models.DateTimeField(auto_now=True, verbose_name='Creation Date')
 
     def __str__(self):
         return f"{self.id} | {self.name}"
@@ -65,7 +66,7 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='product', related_name='images')
-    image = models.ImageField(upload_to='product_images/', verbose_name='image', default='img/default-product.png')
+    image = models.ImageField(upload_to='product_images/', verbose_name='image', default='product_images/default.jpg')
 
     def __str__(self):
         return f"{self.product} | {self.image}"

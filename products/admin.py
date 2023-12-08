@@ -35,12 +35,13 @@ class ProductCategoryGenderAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = \
-        ('id', 'name', 'short_description', 'price')
+        ('id', 'name', 'short_description', 'price', 'date_create')
 
     list_display_links = ('id',)
     ordering = ['id']
     list_per_page = LIST_PER_PAGE
     show_full_result_count = True
+    readonly_fields = ('date_create',)
 
     list_filter = \
         [
@@ -66,6 +67,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Product Information', {
-            'fields': ('name', 'price', 'short_description', 'long_description', 'additional_information')
+            'fields': (
+            'name', 'price', 'short_description', 'long_description', 'additional_information', 'date_create')
         }),
     )

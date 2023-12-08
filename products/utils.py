@@ -72,3 +72,19 @@ def get_categories_counts():
 def get_all_products():
     products = Product.objects.all()
     return products
+
+
+def get_just_arrived_limited(limit=10):
+    products = Product.objects.order_by('-date_create')[:limit]
+    return products
+
+
+def get_trendy_products_limited(limit=10):
+    # TODO: RATING
+    products = Product.objects.all()[:limit]
+    return products
+
+
+def get_categories():
+    categories = Category.objects.all()
+    return categories

@@ -53,6 +53,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
     display: block;
 }
 
+
 body {
     margin: 0;
     font-family: "Poppins", sans-serif;
@@ -10403,4 +10404,20 @@ a.text-dark:hover, a.text-dark:focus {
 .form-padding {
     padding-left: 25%;
     padding-right: 25%;
+}
+
+
+.message.success {
+    margin: 3px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #1e7e34;
+}
+
+
+.message.error {
+    margin: 3px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #cb4040;
 }

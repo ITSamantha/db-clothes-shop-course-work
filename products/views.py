@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-import products.methods
+import products.utils
 from dictionaries.features import *
-from products import methods
+from products import utils
 from products.models import *
 
 
@@ -22,10 +22,10 @@ def product_category(request, category):
 
 
 def shop(request):
-    colors_counts = methods.get_colors_counts()
-    sizes_counts = methods.get_sizes_counts()
-    categories_counts = methods.get_categories_counts()
-    products = methods.get_all_products()
+    colors_counts = utils.get_colors_counts()
+    sizes_counts = utils.get_sizes_counts()
+    categories_counts = utils.get_categories_counts()
+    products = utils.get_all_products()
 
     context = {
         'colors_counts': colors_counts,
@@ -38,10 +38,13 @@ def shop(request):
 
 
 def index(request):
-    categories = Category.objects.all()
-
+    categories = utils.get_categories()
+    just_arrived_products = utils.get_just_arrived_limited()
+    trendy_products = utils.get_trendy_products_limited()
     context = {
         'categories': categories,
+        'just_arrived_products': just_arrived_products,
+        'trendy_products': trendy_products,
     }
 
     return render(request, 'products/index.html', context=context)
@@ -53,7 +56,7 @@ def filter_products(request):
         categories = request.GET.get('categories')
         sizes = request.GET.get('sizes')
 
-        prods = products.methods.filter_products(colors, categories, sizes)
+        prods = products.utils.filter_products(colors, categories, sizes)
         context = {
             'products': prods,
         }

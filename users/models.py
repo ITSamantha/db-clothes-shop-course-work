@@ -5,7 +5,7 @@ from products.models import Product
 
 
 class User(AbstractUser):
-    image = models.ImageField(upload_to='users_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='users_images/', default='users_images/default.png')
     sex = models.CharField(max_length=1, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
     mobile_phone = models.CharField(max_length=11)
@@ -44,3 +44,6 @@ class Subscribe(models.Model):
         unique_together = ('name', 'email')
         verbose_name = 'Subscribe'
         verbose_name_plural = 'Subscribes'
+
+    def __str__(self):
+        return self.email

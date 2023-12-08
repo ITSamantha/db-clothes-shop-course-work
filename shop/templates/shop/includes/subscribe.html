@@ -9,10 +9,13 @@
     </div>
     <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
     {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-            {% endfor %}
-        </ul>
+        {% for message in messages %}
+            <p
+                    {% if message.tags %}
+                        class="message {{ message.tags }}"
+                    {% endif %}>
+                {{ message }}
+            </p>
+        {% endfor %}
     {% endif %}
 </form>

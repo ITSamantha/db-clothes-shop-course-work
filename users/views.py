@@ -46,8 +46,11 @@ def subscribe(request):
             user_name = cleaned_data['name']
             user_email = cleaned_data['email']
             sub = Subscribe(name=user_name, email=user_email)
-            sub.save()
-            messages.success(request, 'Form submission successful')
+            try:
+                sub.save()
+                messages.success(request, 'You successfully subscribed :)')
+            except Exception as e:
+                messages.error(request, 'This email has already been used :(')
     else:
         form = SubscribeForm()
     context = {
