@@ -1,0 +1,28 @@
+<div class="d-flex mb-3">
+    <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+    <form id="size-form">
+        {% for sz in sizes %}
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" value="{{ sz.size__id }}"
+                       id="size-{{ sz.size__id }}" name="size" {% if size == sz.size__id %} checked {% endif %}>
+                <label class="custom-control-label"
+                       for="size-{{ sz.size__id }}">{{ sz.size__name }}</label>
+            </div>
+        {% endfor %}
+    </form>
+</div>
+
+<div class="d-flex mb-4">
+    <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+    {% for item in colors %}
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="color-{{ item.color.id }}"
+                   value="{{ item.color.id }}" name="color" {% if forloop.first %}checked{% endif %}>
+            <label class="custom-control-label"
+                   for="color-{{ item.color.id }}">{{ item.color.name }}</label>
+            <input type="hidden" id="product-size-color-id" value="{{ item.id }}">
+        </div>
+        <p class="text-dark font-weight-light mb-0 mr-3" style="font-size: 12px;">Available
+            count: {{ item.count }}</p>
+    {% endfor %}
+</div>

@@ -22,6 +22,7 @@
 
 {% block content %}
     {% include 'shop/includes/page_header.html' with title='Our Shop' %}
+
     <!-- Shop Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
@@ -33,6 +34,7 @@
                     <!-- Price End -->
 
                     <!--Colors Start-->
+
                     {% include 'products/includes/checkbox_filter.html' with filters=colors_counts title='colors' %}
 
                     <!--Colors End-->
@@ -44,6 +46,7 @@
                     <!-- Size Start -->
                     {% include 'products/includes/checkbox_filter.html' with filters=sizes_counts last=True title='sizes' %}
                     <!-- Size End -->
+
                 </form>
                 <!-- Shop Sidebar End -->
             </div>

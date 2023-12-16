@@ -30,15 +30,20 @@
     {% include 'products/includes/categories.html' %}
     <!-- Categories End -->
 
+    <!-- Trendy Products Start -->
     {% if trendy_products %}
         {% include 'products/includes/topic_products.html' with title='Trandy Products' products=trendy_products %}
     {% endif %}
+    <!-- Trendy Products End -->
 
+    <!-- Just Arrived Products Start -->
     {% if just_arrived_products %}
         {% include 'products/includes/topic_products.html' with title='Just Arrived' products=just_arrived_products %}
     {% endif %}
+    <!-- Just Arrived Products End -->
 
     <!-- Vendor Start -->
     {% include 'shop/includes/vendors.html' %}
     <!-- Vendor End -->
+
 {% endblock %}

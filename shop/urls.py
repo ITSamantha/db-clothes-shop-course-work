@@ -4,6 +4,6 @@ from shop.views import *
 app_name = 'shop'
 
 urlpatterns = [
-    path('contact/', contact, name='contact'),
-    path('topic/<str:topic>', topic, name='topic'),
+    path('contact/', ContactView.as_view(), name='contact'),
+    path('topic/<str:topic>', TopicView.as_view(), name='topic'),
 ]

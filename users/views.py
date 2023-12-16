@@ -1,18 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-import users.forms
+from users.forms import RegistrationForm, LoginForm, ProfileForm
 from shop.forms import SubscribeForm
-from users.models import Subscribe
 
 
 # Create your views here.
 
 def login_user(request):
     if request.method == 'POST':
-        form = users.forms.LoginForm(data=request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
             cleaned_data = form.cleaned_data
             username = cleaned_data['username']
@@ -20,9 +18,10 @@ def login_user(request):
             user = authenticate(request, username=username, password=password)
             if user and user.is_active:  # Block
                 login(request, user)
+                print(request.user)
                 return redirect('index')
     else:
-        form = users.forms.LoginForm()
+        form = LoginForm()
     context = {
         'form': form,
     }
@@ -31,11 +30,21 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return render(request, 'users/login.html')
+    return render(request, 'products/index.html')
 
 
 def register_user(request):
-    return render(request, 'users/register.html')
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('users:login')
+    else:
+        form = RegistrationForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'users/register.html', context=context)
 
 
 def subscribe(request):
@@ -50,3 +59,25 @@ def subscribe(request):
         'form': form,
     }
     return render(request, 'shop/includes/subscribe.html', context=context)
+
+
+class Http403(Exception):
+    pass
+
+
+def profile(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            form = ProfileForm(instance=request.user)
+        else:
+            form = ProfileForm(request.POST, request.FILES, instance=request.user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'The new data has been successfully saved!')
+                return redirect('users:profile')
+        context = {
+            'form': form,
+        }
+        return render(request, 'users/profile.html', context=context)
+    else:
+        raise Http403("Access forbidden.")

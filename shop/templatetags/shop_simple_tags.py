@@ -1,6 +1,7 @@
 from django import template
 
-from dictionaries import topics, networks, pages, features, vendors, shop_info
+import interface.utils
+from dictionaries import topics, pages, shop_info
 
 register = template.Library()
 
@@ -12,7 +13,8 @@ def get_topics():
 
 @register.simple_tag()
 def get_networks():
-    return networks.NETWORKS
+    networks = interface.utils.get_networks()
+    return networks
 
 
 @register.simple_tag()
@@ -22,12 +24,14 @@ def get_pages():
 
 @register.simple_tag()
 def get_features():
-    return features.FEATURES
+    features = interface.utils.get_features()
+    return features
 
 
 @register.simple_tag()
 def get_vendors():
-    return vendors.VENDORS
+    vendors = interface.utils.get_vendors()
+    return vendors
 
 
 @register.simple_tag()

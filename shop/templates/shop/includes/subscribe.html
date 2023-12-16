@@ -1,32 +1,4 @@
 <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-<form method="POST" id="subscribe-form">
-    {% csrf_token %}
-    {% for f in form %}
-        <div class="form-group">
-            {{ f }}
-            {% for error in f.errors %}
-                {{ error }}
-            {% endfor %}
-        </div>
-    {% endfor %}
-    <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
-    {% if form.non_field_errors %}
-        {% for error in form.non_field_errors %}
-            <p class="message error">
-                {{ error }}
-            </p>
-        {% endfor %}
-    {% else %}
-        {% if messages %}
-            {% for message in messages %}
-                <p
-                        {% if message.tags %}
-                            class="message {{ message.tags }}"
-                        {% endif %}>
-                    {{ message }}
-                </p>
-            {% endfor %}
-        {% endif %}
-    {% endif %}
 
-</form>
+{% include 'forms/includes/base.html' with url='users:subscribe' button_title='SUBMIT' method="POST" id="subscribe-form" %}
+

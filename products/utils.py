@@ -79,6 +79,11 @@ def get_just_arrived_limited(limit=10):
     return products
 
 
+def get_product_images(product_id):
+    images = ProductImage.objects.filter(product__id=product_id)
+    return images
+
+
 def get_trendy_products_limited(limit=10):
     # TODO: RATING
     products = Product.objects.all()[:limit]

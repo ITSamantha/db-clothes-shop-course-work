@@ -1,16 +1,18 @@
 {% load static %}
 {% load product_simple_tags %}
 
+{% min_product_price as min %}
+{% max_product_price as max %}
+
 
 <div class="border-bottom mb-4 pb-4">
     <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
     <div class="input-group" style="margin-bottom: 10px">
         <p style="margin-right: 5px;margin-top: 5px;">From </p>
-        <input type="text" class="form-control" placeholder="{% min_product_price %}">
+        <input type="text" class="form-control" placeholder="{% if min %}{{ min }}{% endif %}">
     </div>
     <div class="input-group">
         <p style="margin-right: 5px;margin-top: 5px; padding-right: 22px;">To</p>
-        <input type="text" class="form-control" placeholder="{% max_product_price %}">
+        <input type="text" class="form-control" placeholder="{% if max %}{{ max }}{% endif %}">
     </div>
 </div>
-

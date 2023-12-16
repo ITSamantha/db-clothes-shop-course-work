@@ -13,6 +13,10 @@
 
 {% block content %}
 
-    {% include 'shop/includes/page_header.html' with title='Login' %}
+
+    {% include 'shop/includes/page_header.html' with title='Registration' %}
+    <div class="form-padding">
+        {% include 'forms/includes/base.html' with url='users:register' button_title='SUBMIT' method='POST' %}
+    </div>
 
 {% endblock %}

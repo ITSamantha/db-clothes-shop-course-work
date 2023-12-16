@@ -22,16 +22,6 @@ class ColorAdmin(BaseAdminModel):
     pass
 
 
-"""
-@admin.register(ProductCategoryGender)
-class ProductCategoryGenderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'category', 'gender')
-    list_display_links = ('id', 'category', 'gender')
-    ordering = ['id']
-    list_filter = ('category', 'gender')
-"""
-
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = \
@@ -68,6 +58,8 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Product Information', {
             'fields': (
-            'name', 'price', 'short_description', 'long_description', 'additional_information', 'date_create')
+                'name', 'price', 'short_description', 'long_description', 'additional_information', 'date_create')
         }),
     )
+
+

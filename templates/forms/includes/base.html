@@ -1,0 +1,46 @@
+<form enctype="multipart/form-data" method={{ method }} action="{% url url %}" {% if id %}id="{{ id }}"{% endif %}>
+    {% csrf_token %}
+    {% for f in form %}
+        <div class="form-group">
+
+            <p>{{ f.label }}</p>
+
+            {% if f.name == 'image' %}
+                {% if f.value %}
+                    <img src="{{ f.value.url }}" style="max-width: 200px; padding: 10px;" class="rounded-image"/>
+                {% endif %}
+            {% endif %}
+            <p>{{ f }}</p>
+
+            {% if f.errors %}
+                {% for error in f.errors %}
+                    <p class="message error">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+    <p>
+        <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">{{ button_title }}
+        </button>
+    </p>
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p class="message error">
+                {{ error }}
+            </p>
+        {% endfor %}
+    {% else %}
+        {% if messages %}
+            {% for message in messages %}
+                <p
+                        {% if message.tags %}
+                            class="message {{ message.tags }}"
+                        {% endif %}>
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+</form>

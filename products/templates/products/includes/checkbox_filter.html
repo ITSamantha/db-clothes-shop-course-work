@@ -8,16 +8,20 @@
 {% else %}
     <div class="border-bottom mb-4 pb-4">
 {% endif %}
-<h5 class="font-weight-semi-bold mb-4">Filter by {{ title }}</h5>
-{% for filter in filters %}
-    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-        <input type="checkbox" class="custom-control-input" id="{{ filter.name.lower }}-{{ filter.column_id }}"
-               value="{{ filter.column_id }}"
-               name="{{ title }}">
-        <label class="custom-control-label"
-               for="{{ filter.name.lower }}-{{ filter.column_id }}">{{ filter.name }}</label>
-        <span class="badge border font-weight-normal">{{ filter.product__count }}</span>
-    </div>
-{% endfor %}
-</div>
 
+<h5 class="font-weight-semi-bold mb-4">Filter by {{ title }}</h5>
+{% if filters %}
+    {% for filter in filters %}
+        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+            <input type="checkbox" class="custom-control-input" id="{{ filter.name.lower }}-{{ filter.column_id }}"
+                   value="{{ filter.column_id }}"
+                   name="{{ title }}">
+            <label class="custom-control-label"
+                   for="{{ filter.name.lower }}-{{ filter.column_id }}">{{ filter.name }}</label>
+            <span class="badge border font-weight-normal">{{ filter.product__count }}</span>
+        </div>
+    {% endfor %}
+{% else %}
+    <p class="m-0" style="padding-bottom: 20px;">There are no filters here.</p>
+{% endif %}
+</div>

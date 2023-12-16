@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    <title>Cute&Classy - Contact us</title>
+    <title>Cute&Classy - Profile</title>
 {% endblock %}
 
 {% block navbar_position %}
@@ -14,9 +14,9 @@
 
 {% block content %}
 
-    {% include 'shop/includes/page_header.html' with title='Login' %}
+    {% include 'shop/includes/page_header.html' with title='Profile' %}
     <div class="form-padding">
-        {% include 'forms/includes/base.html' with url='users:login' button_title='SUBMIT' method='POST' %}
+        {% include 'forms/includes/base.html' with url='users:profile' button_title='SUBMIT' method='POST' %}
     </div>
 
 {% endblock %}

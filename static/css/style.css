@@ -10408,7 +10408,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .message {
     margin: 3px;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -10418,4 +10418,9 @@ a.text-dark:hover, a.text-dark:focus {
 
 .message.error {
     color: #cb4040;
+}
+
+.rounded-image {
+    border-radius: 50px;
+    overflow: hidden;
 }

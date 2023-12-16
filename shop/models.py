@@ -1,4 +1,8 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+
+from products.models import Product
+from users.models import User
 
 
 class Country(models.Model):

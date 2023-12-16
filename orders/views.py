@@ -1,8 +1,7 @@
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
 import dictionaries.topics
-import dictionaries.networks
-from dictionaries.features import FEATURES
 from products.models import Category
 
 
@@ -11,31 +10,31 @@ from products.models import Category
 def cart(request):
     categories = Category.objects.all()
     context = {
-        'features': FEATURES,
+        # 'features': FEATURES,
         'topics': dictionaries.topics.TOPICS,
-        'networks': dictionaries.networks.NETWORKS,
+        # 'networks': dictionaries.networks.NETWORKS,
         'categories': categories,
     }
     return render(request, 'orders/cart.html', context=context)
 
 
-def checkout(request):
-    categories = Category.objects.all()
-    context = {
-        'features': FEATURES,
-        'topics': dictionaries.topics.TOPICS,
-        'networks': dictionaries.networks.NETWORKS,
-        'categories': categories,
-    }
-    return render(request, 'orders/checkout.html', context=context)
+class CheckoutView(TemplateView):
+    template_name = 'orders/checkout.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
 
 
-def favourites(request):
-    categories = Category.objects.all()
-    context = {
-        'features': FEATURES,
-        'topics': dictionaries.topics.TOPICS,
-        'networks': dictionaries.networks.NETWORKS,
-        'categories': categories,
-    }
-    return render(request, 'orders/favourites.html', context=context)
+class FavouritesView(TemplateView):
+    template_name = 'orders/favourites.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
+
+def add_to_cart(request, product):
+    pass
