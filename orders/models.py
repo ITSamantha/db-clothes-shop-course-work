@@ -26,8 +26,7 @@ class PaymentType(models.Model):
         verbose_name_plural = 'Payment Types'
 
 
-class Cart(models.Model):
-    quantity = models.PositiveIntegerField(verbose_name='Product Quantity')
+class BaseProductList(models.Model):
     created_at = models.DateTimeField(auto_now=True, verbose_name='Creation Date')
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='User')
     product_size_color = models.ForeignKey(ProductSizeColor, on_delete=models.PROTECT, verbose_name='Product')
@@ -35,7 +34,22 @@ class Cart(models.Model):
     def __str__(self):
         return f"{self.product_size_color}| {self.user}"
 
+
+class Cart(BaseProductList):
+    quantity = models.PositiveIntegerField(verbose_name='Product Quantity')
+    created_at = models.DateTimeField(auto_now=True, verbose_name='Creation Date')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='User')
+    product_size_color = models.ForeignKey(ProductSizeColor, on_delete=models.PROTECT, verbose_name='Product')
+
+    class Meta:
+        unique_together = ('user', 'product_size_color')
+
     class Meta:
         verbose_name = 'Cart'
         verbose_name_plural = 'Carts'
-        unique_together = ('user', 'product_size_color')
+
+
+class Favourites(BaseProductList):
+    class Meta:
+        verbose_name = 'Favourite'
+        verbose_name_plural = 'Favourites'
