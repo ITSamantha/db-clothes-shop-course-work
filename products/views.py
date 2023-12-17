@@ -1,8 +1,13 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+import json
+
+from django.contrib import messages
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.views.generic import DetailView, TemplateView
 
 import products.utils
+from orders.models import Cart
 from products import utils
 from products.models import *
 
@@ -21,12 +26,12 @@ class ProductDetailView(DetailView):
 
 
 def get_size_details(request, product_id):
-    sizes = ProductSizeColor.objects.filter(product=product_id).values('size__id', 'size__name')
+    sizes = ProductSizeColor.objects.filter(product__id=product_id).distinct().values('size__id', 'size__name')
     if 'size' in request.GET:
         size = int(request.GET['size'])
     else:
         size = ProductSizeColor.objects.filter(product=product_id).first().size.id
-    colors = ProductSizeColor.objects.filter(size=size)
+    colors = ProductSizeColor.objects.filter(size=size, product__id=product_id)
     context = {
         'size': size,
         'colors': colors,
@@ -79,3 +84,5 @@ def filter_products(request):
 
         return render(request, 'products/includes/shop_products.html', context=context)
     return HttpResponse('Page not found')
+
+

@@ -32,15 +32,6 @@
             </p>
         {% endfor %}
     {% else %}
-        {% if messages %}
-            {% for message in messages %}
-                <p
-                        {% if message.tags %}
-                            class="message {{ message.tags }}"
-                        {% endif %}>
-                    {{ message }}
-                </p>
-            {% endfor %}
-        {% endif %}
+        {% include 'includes/messages.html' %}
     {% endif %}
 </form>

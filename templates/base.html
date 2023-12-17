@@ -1,6 +1,7 @@
 {% load static %}
 {% load  shop_simple_tags %}
 {% load  product_simple_tags %}
+{% load orders_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,7 +81,7 @@
                 </a>
                 <a href="{% url 'orders:cart' %}" class="btn border" title="Cart">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge">{% get_cart_count_products user %}</span>
                 </a>
                 <a href="{% url 'users:profile' %}" class="btn border" title="Profile">
                     <i class="fas fa-user text-primary"></i>

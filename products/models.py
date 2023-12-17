@@ -97,7 +97,7 @@ class ProductSizeColor(models.Model):
     count = models.PositiveIntegerField(verbose_name='count of product')
 
     def __str__(self):
-        return f"{self.size} | {self.color}"
+        return f"{self.size} | {self.color} | {self.product}"
 
     class Meta:
         unique_together = ('size', 'color', 'product')

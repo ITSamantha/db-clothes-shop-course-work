@@ -1,21 +1,29 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+import json
+from django.contrib import messages
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import TemplateView, ListView
 
 import dictionaries.topics
-from products.models import Category
+import orders.utils
+from orders.models import Cart
+from products.models import Category, ProductSizeColor
 
 
 # Create your views here.
 
 def cart(request):
     categories = Category.objects.all()
-    context = {
-        # 'features': FEATURES,
-        'topics': dictionaries.topics.TOPICS,
-        # 'networks': dictionaries.networks.NETWORKS,
-        'categories': categories,
-    }
-    return render(request, 'orders/cart.html', context=context)
+
+    return render(request, 'orders/cart.html')
+
+
+class CartView(ListView):
+    template_name = 'orders/cart.html'
+    model = Cart
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return orders.utils.get_cart_products(self.request.user)
 
 
 class CheckoutView(TemplateView):
@@ -36,5 +44,22 @@ class FavouritesView(TemplateView):
         return context
 
 
-def add_to_cart(request, product):
-    pass
+def add_product_to_cart(request):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        count = int(data.get('count'))
+        product = int(data.get('product'))
+        product_size_color = get_object_or_404(ProductSizeColor, id=product)
+
+        cart, created = Cart.objects.get_or_create(user=request.user, product_size_color=product_size_color,
+                                                   quantity=count)
+        if not created:
+            cart.quantity += count
+            cart.save()
+
+        messages.success(request, 'This product is successfully added to the cart!')
+
+    except Exception as e:
+        print(e)
+        messages.error(request, 'An error occurred.')
+    return render(request, 'includes/messages.html')
