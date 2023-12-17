@@ -19,8 +19,9 @@ def min_product_price():
 
 
 @register.simple_tag()
-def get_product_images(product_id):
-    images = ProductImage.objects.filter(product__id=product_id)
+def get_product_images(product_id, limit=None):
+    images = ProductImage.objects.filter(product__id=product_id) if limit is None else ProductImage.objects.filter(
+        product__id=product_id)[:limit]
     return images
 
 

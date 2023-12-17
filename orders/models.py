@@ -45,6 +45,9 @@ class Cart(BaseProductList):
         verbose_name = 'Cart'
         verbose_name_plural = 'Carts'
 
+    def sum(self):
+        return self.quantity * self.product_size_color.product.price
+
 
 class Favourites(BaseProductList):
     class Meta:

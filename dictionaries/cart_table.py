@@ -1,7 +1,10 @@
 CART_TABLE = [
-    'Products',
+    'Product',
+    'Size',
+    'Color',
     'Price',
     'Quantity',
     'Total',
     'Remove',
+
 ]

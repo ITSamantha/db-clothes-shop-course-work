@@ -22,7 +22,4 @@ function addProductForm() {
     })
         .then(
             response => response.text())
-        .then(data => {
-            messages.innerHTML = data;
-        })
 }
