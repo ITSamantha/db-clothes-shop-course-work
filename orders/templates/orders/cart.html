@@ -44,27 +44,35 @@
                                 <td class="align-middle"><img src={{ image.0.image.url }} alt="image"
                                                               style="width: 50px;">
                                     {{ product.product_size_color.product.name }}
+                                    <input type="hidden" value="{{ product.id }}" id="product-id-{{ product.id }}">
                                 </td>
                                 <td class="align-middle">{{ product.product_size_color.size.name }}</td>
                                 <td class="align-middle">{{ product.product_size_color.color.name }}</td>
-                                <td class="align-middle">$150</td>
+                                <td class="align-middle">
+                                    {{ product.product_size_color.product.price }}
+                                    <input type="hidden" id="product-price-{{ product.id }}"
+                                           value="{{ product.product_size_color.product.price }}">
+                                </td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus">
-                                                <i class="fa fa-minus"></i>
+                                            <button class="btn btn-sm btn-primary btn-minus minus"
+                                                    onclick="updateProductCount(event)" id="{{ product.id }}">
+                                                <i class="fa fa-minus minus" id="{{ product.id }}"></i>
                                             </button>
                                         </div>
                                         <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                               value="1">
+                                               value="{{ product.quantity }}" id="product-count-{{ product.id }}"
+                                               max="{{ product.product_size_color.count }}">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus">
-                                                <i class="fa fa-plus"></i>
+                                            <button class="btn btn-sm btn-primary btn-plus plus"
+                                                    onclick="updateProductCount(event)" id="{{ product.id }}">
+                                                <i class="fa fa-plus plus" id="{{ product.id }}"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle">$150</td>
+                                <td class="align-middle" id="product-total-{{ product.id }}">{{ product.sum }}$</td>
                                 <td class="align-middle">
                                     <button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
                                 </td>
@@ -112,4 +120,8 @@
         </div>
     </div>
     <!-- Cart End -->
+{% endblock %}
+
+{% block scripts %}
+    <script src={% static "js/update_product_count.js" %}></script>
 {% endblock %}

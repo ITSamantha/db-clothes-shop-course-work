@@ -6,5 +6,4 @@ CART_TABLE = [
     'Quantity',
     'Total',
     'Remove',
-
 ]
