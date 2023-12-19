@@ -22,6 +22,12 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         product_id = self.kwargs['product_id']
         context['product_images'] = utils.get_product_images(product_id)
+
+        product_categories = ProductCategoryGender.objects.filter(product=product_id).values('category_id').distinct()
+        related_products = Product.objects.filter(productcategorygender__category__in=product_categories).exclude(
+            id=product_id).distinct()
+        context['products'] = related_products
+
         return context
 
 

@@ -41,8 +41,10 @@
                         {% for product in products %}
                             <tr id="{{ product.id }}">
                                 {% get_product_images product.product_size_color.product.id 1 as image %}
-                                <td class="align-middle"><img src={{ image.0.image.url }} alt="image"
-                                                              style="width: 50px;">
+                                <td class="align-middle">
+                                    <p><img src={{ image.0.image.url }} alt="image" style="width: 70px;"></p>
+                                </td>
+                                <td class="align-middle">
                                     {{ product.product_size_color.product.name }}
                                     <input type="hidden" value="{{ product.product_size_color.id }}"
                                            id="product-id-{{ product.product_size_color.id }}">

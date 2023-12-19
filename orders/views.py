@@ -4,11 +4,12 @@ import random
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, FormView
 
 import dictionaries.topics
 import orders.utils
 import products.utils
+from orders.forms import OrderForm
 from orders.models import Cart
 from products.models import Category, ProductSizeColor
 
@@ -27,8 +28,9 @@ class CartView(ListView):
         return orders.utils.get_cart_products(self.request.user)
 
 
-class CheckoutView(TemplateView):
+class CheckoutView(FormView):
     template_name = 'orders/checkout.html'
+    form_class = OrderForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

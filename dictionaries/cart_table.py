@@ -1,4 +1,5 @@
 CART_TABLE = [
+    '',
     'Product',
     'Size',
     'Color',

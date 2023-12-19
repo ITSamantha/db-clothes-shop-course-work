@@ -28,8 +28,8 @@ class City(models.Model):
 
 
 class CountryCity(models.Model):
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)  # TODO: CHANGE
-    city = models.ForeignKey(City, on_delete=models.CASCADE)  # TODO: CHANGE
+    country = models.ForeignKey(Country, on_delete=models.PROTECT)
+    city = models.ForeignKey(City, on_delete=models.PROTECT)
 
     class Meta:
         unique_together = ('country', 'city')
@@ -38,5 +38,3 @@ class CountryCity(models.Model):
 
     def __str__(self):
         return f'{self.country}, {self.city}'
-
-

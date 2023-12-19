@@ -20,3 +20,8 @@ class CartAdmin(admin.ModelAdmin):
     ordering = ['id']
     list_per_page = 10
     show_full_result_count = True
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    pass

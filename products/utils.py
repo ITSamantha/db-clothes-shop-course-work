@@ -13,11 +13,6 @@ def get_min_product_price():
     return minimum['price__min']
 
 
-"""def get_product_size_color_count_info(product):
-    sizes = ProductSizeColor.objects.filter(product_size_color__product=product)
-    return sizes"""
-
-
 def get_product_size_color_count(product):
     result = ProductSizeColor.objects.filter(product=product)
     return result
