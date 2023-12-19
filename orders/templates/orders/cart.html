@@ -39,42 +39,55 @@
                     <tbody class="align-middle">
                     {% if products %}
                         {% for product in products %}
-                            <tr>
+                            <tr id="{{ product.id }}">
                                 {% get_product_images product.product_size_color.product.id 1 as image %}
                                 <td class="align-middle"><img src={{ image.0.image.url }} alt="image"
                                                               style="width: 50px;">
                                     {{ product.product_size_color.product.name }}
-                                    <input type="hidden" value="{{ product.id }}" id="product-id-{{ product.id }}">
+                                    <input type="hidden" value="{{ product.product_size_color.id }}"
+                                           id="product-id-{{ product.product_size_color.id }}">
                                 </td>
                                 <td class="align-middle">{{ product.product_size_color.size.name }}</td>
                                 <td class="align-middle">{{ product.product_size_color.color.name }}</td>
                                 <td class="align-middle">
                                     {{ product.product_size_color.product.price }}
-                                    <input type="hidden" id="product-price-{{ product.id }}"
+                                    <input type="hidden" id="product-price-{{ product.product_size_color.id }}"
                                            value="{{ product.product_size_color.product.price }}">
                                 </td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto" style="width: 100px;">
                                         <div class="input-group-btn">
                                             <button class="btn btn-sm btn-primary btn-minus minus"
-                                                    onclick="updateProductCount(event)" id="{{ product.id }}">
-                                                <i class="fa fa-minus minus" id="{{ product.id }}"></i>
+                                                    onclick="updateProductCount(event)"
+                                                    id="{{ product.product_size_color.id }}">
+                                                <i class="fa fa-minus minus"
+                                                   id="{{ product.product_size_color.id }}"></i>
                                             </button>
                                         </div>
                                         <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                               value="{{ product.quantity }}" id="product-count-{{ product.id }}"
+                                               value="{{ product.quantity }}"
+                                               id="product-count-{{ product.product_size_color.id }}"
                                                max="{{ product.product_size_color.count }}">
                                         <div class="input-group-btn">
                                             <button class="btn btn-sm btn-primary btn-plus plus"
-                                                    onclick="updateProductCount(event)" id="{{ product.id }}">
-                                                <i class="fa fa-plus plus" id="{{ product.id }}"></i>
+                                                    onclick="updateProductCount(event)"
+                                                    id="{{ product.product_size_color.id }}">
+                                                <i class="fa fa-plus plus" id="{{ product.product_size_color.id }}"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="align-middle" id="product-total-{{ product.id }}">{{ product.sum }}$</td>
+                                <td class="align-middle" id="product-total-{{ product.product_size_color.id }}">
+                                    <input type="hidden" value="{{ product.sum }}"
+                                           id="product-total-val-{{ product.product_size_color.id }}">
+                                    {{ product.sum }}$
+                                </td>
                                 <td class="align-middle">
-                                    <button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-sm btn-primary remove"
+                                            id="{{ product.id }}"
+                                            onclick="removeProductFromCart(event)">
+                                        <i class="fa fa-times remove" id="{{ product.id }}"></i>
+                                    </button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -100,17 +113,19 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Subtotal</h6>
-                            <h6 class="font-weight-medium">$150</h6>
+                            <h6 class="font-weight-medium" id="total-amount"></h6>
+                            <input type="hidden" id="total-amount-price">
                         </div>
-                        <!--<div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium">$10</h6>
-                        </div>-->
+                            <h6 class="font-weight-medium">{{ shipping_price }}$</h6>
+                            <input type="hidden" value="{{ shipping_price }}" id="total-shipping-price">
+                        </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">$160</h5>
+                            <h5 class="font-weight-bold" id="total-order-price"></h5>
                         </div>
                         <a class="btn btn-block btn-primary my-3 py-3" href="{% url 'orders:checkout' %}">Proceed To
                             Checkout</a>
@@ -124,4 +139,5 @@
 
 {% block scripts %}
     <script src={% static "js/update_product_count.js" %}></script>
+    <script src={% static "js/remove_product_from_cart.js" %}></script>
 {% endblock %}

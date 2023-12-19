@@ -45,7 +45,7 @@ def get_product_colors(product):
 
 @register.simple_tag()
 def get_categories():
-    categories = Category.objects.all()
+    categories = Category.objects.filter(productcategorygender__product__isnull=False).distinct()
     return categories
 
 

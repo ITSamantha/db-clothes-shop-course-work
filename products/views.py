@@ -41,7 +41,18 @@ def get_size_details(request, product_id):
 
 
 def product_category(request, category):
-    return render(request, 'products/category.html')
+    colors_counts = utils.get_colors_counts()
+    sizes_counts = utils.get_sizes_counts()
+    categories_counts = utils.get_categories_counts()
+    products = utils.get_all_products()
+    context = {
+        'selected_category': category,
+        'colors_counts': colors_counts,
+        'sizes_counts': sizes_counts,
+        'categories_counts': categories_counts,
+        'products': products,
+    }
+    return render(request, 'products/shop.html', context=context)
 
 
 def shop(request):
@@ -81,8 +92,5 @@ def filter_products(request):
         context = {
             'products': prods,
         }
-
         return render(request, 'products/includes/shop_products.html', context=context)
     return HttpResponse('Page not found')
-
-

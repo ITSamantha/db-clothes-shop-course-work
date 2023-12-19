@@ -118,17 +118,15 @@
             {% block navbar_position %}
             {% endblock %}
             {% if categories %}
-                <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-
+                <div class="navbar-nav w-100 overflow-hidden">
                     {% for category in categories %}
-                        <a href="{% url 'products:product_category' category.name.lower %}"
+                        <a href="{% url 'products:product_category' category.id %}"
                            class="nav-item nav-link">{{ category.name }}</a>
                     {% endfor %}
                 </div>
             {% else %}
                 <h6 class="m-0 display-5" style="padding: 10px">No categories found.</h6>
             {% endif %}
-
             </nav>
         </div>
     {% endif %}

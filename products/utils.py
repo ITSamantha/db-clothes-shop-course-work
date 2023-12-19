@@ -1,4 +1,4 @@
-from django.db.models import Max, Min, F, Count, QuerySet
+from django.db.models import Max, Min, F, Count, QuerySet, Q
 
 from products.models import *
 
@@ -35,14 +35,14 @@ def get_product_colors(product):
 
 
 def filter_products(colors=None, categories=None, sizes=None):
-    products = None
+    filter_args = Q()
     if colors is not None:
-        products = Product.objects.filter(productsizecolor__color__id__in=colors)
+        filter_args &= Q(productsizecolor__color__id__in=colors)
     if categories is not None:
-        products = Product.objects.filter(productcategorygender__category__in=categories)
+        filter_args &= Q(productcategorygender__category__in=categories)
     if sizes is not None:
-        products = Product.objects.filter(productsizecolor__size__id__in=sizes)
-    products = products.distinct() if products is not None else Product.objects.all()
+        filter_args &= Q(productsizecolor__size__id__in=sizes)
+    products = Product.objects.filter(filter_args).distinct()
     return products
 
 
@@ -56,7 +56,6 @@ def get_colors_counts():
 
 
 def get_sizes_counts():
-    # TODO: Обработать, когда пусто!! Фильтр пустой становится!
     sizes_counts = ProductSizeColor.objects.values(name=F('size__name'), column_id=F('size__id')).annotate(
         Count("product", distinct=True))
     return sizes_counts

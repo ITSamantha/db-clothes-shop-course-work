@@ -1,4 +1,6 @@
 import json
+import random
+
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -11,18 +13,15 @@ from orders.models import Cart
 from products.models import Category, ProductSizeColor
 
 
-# Create your views here.
-
-def cart(request):
-    categories = Category.objects.all()
-
-    return render(request, 'orders/cart.html')
-
-
 class CartView(ListView):
     template_name = 'orders/cart.html'
     model = Cart
     context_object_name = 'products'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['shipping_price'] = random.randint(10, 100)
+        return context
 
     def get_queryset(self):
         return orders.utils.get_cart_products(self.request.user)
@@ -86,4 +85,11 @@ def update_product_count_in_cart(request):
         cart.quantity = count
         cart.save()
 
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def remove_product_from_cart(request):
+    data = json.loads(request.body.decode('utf-8'))
+    cart_id = int(data.get('cart'))
+    Cart.objects.get(id=cart_id).delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
