@@ -38,3 +38,19 @@ class CountryCity(models.Model):
 
     def __str__(self):
         return f'{self.country}, {self.city}'
+
+
+class Demand(models.Model):
+    name = models.CharField(max_length=64, verbose_name='Name')
+    email = models.EmailField(max_length=128, verbose_name='Email')
+    subject = models.CharField(max_length=64, verbose_name='Subject')
+    message = models.TextField(verbose_name='Message')
+    created = models.DateTimeField(auto_created=True, auto_now=True, verbose_name='Creation Date')
+
+    class Meta:
+        verbose_name = 'Demand'
+        verbose_name_plural = 'Demands'
+        unique_together = ('name', 'email', 'subject', 'message')
+
+    def __str__(self):
+        return f"{self.name} | {self.subject}"

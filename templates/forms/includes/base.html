@@ -12,13 +12,7 @@
             {% endif %}
             <p>{{ f }}</p>
 
-            {% if f.errors %}
-                {% for error in f.errors %}
-                    <p class="message error">
-                        {{ error }}
-                    </p>
-                {% endfor %}
-            {% endif %}
+            {% include 'includes/errors.html' %}
         </div>
     {% endfor %}
     <p>

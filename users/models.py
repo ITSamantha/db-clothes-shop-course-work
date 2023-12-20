@@ -46,7 +46,7 @@ class Review(models.Model):
     description = models.TextField()
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    date = models.DateField(auto_now=True)
+    date = models.DateField(auto_now=True, auto_created=True)
 
     def __str__(self):
         return f"{self.date} | {self.user_id} | {self.product_id}"

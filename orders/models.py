@@ -30,7 +30,7 @@ class PaymentType(models.Model):
 
 
 class BaseProductList(models.Model):
-    created_at = models.DateTimeField(auto_created=True, verbose_name='Creation Date')
+    created_at = models.DateTimeField(auto_created=True, auto_now=True, verbose_name='Creation Date')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User')
     product_size_color = models.ForeignKey(ProductSizeColor, on_delete=models.CASCADE, verbose_name='Product')
 
@@ -70,8 +70,8 @@ class Order(models.Model):
     address = models.CharField(max_length=256, verbose_name='Address')
     country_city = models.ForeignKey(CountryCity, on_delete=models.PROTECT, verbose_name='Country & City')
     postal_code = models.CharField(max_length=6, verbose_name='Postal Code')
-    created = models.DateTimeField(auto_created=True, verbose_name='Created At')
-    updated = models.DateTimeField(auto_now=True, verbose_name='Last Updated')
+    created = models.DateTimeField(auto_created=True, auto_now=True, verbose_name='Created At')
+    updated = models.DateTimeField(auto_now=True, auto_created=True, verbose_name='Last Updated')
     status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name='Order Status')
     cart = models.JSONField(verbose_name='Cart')
     payment_type = models.ForeignKey(PaymentType, on_delete=models.PROTECT, verbose_name='Payment Type')

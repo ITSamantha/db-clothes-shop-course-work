@@ -52,7 +52,7 @@ function updateProductCount(event) {
 
 
 document.addEventListener('DOMContentLoaded', updateSubtotalAmount());
-document.addEventListener('DOMContentLoaded', updateTotalAmount());
+
 
 
 function updateSubtotalAmount() {
@@ -71,11 +71,3 @@ function updateSubtotalAmount() {
     document.getElementById('total-amount-price').value = totalAmount.toFixed(2);
 }
 
-function updateTotalAmount() {
-    const totalPrice = parseFloat(document.getElementById('total-amount-price').value)
-    const totalShipping = parseFloat(document.getElementById('total-shipping-price').value)
-
-    let totalAmount = totalPrice + totalShipping
-
-    document.getElementById('total-order-price').textContent = totalAmount.toFixed(1) + '$';
-}

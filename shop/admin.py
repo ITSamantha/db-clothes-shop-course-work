@@ -28,3 +28,8 @@ class CountryCityAdmin(admin.ModelAdmin):
     ]
 
     show_full_result_count = True
+
+
+@admin.register(Demand)
+class DemandAdmin(admin.ModelAdmin):
+    pass

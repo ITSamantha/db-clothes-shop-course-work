@@ -54,12 +54,10 @@ class Product(models.Model):
     short_description = models.CharField(max_length=256, blank=True, null=True, verbose_name='short description')
     long_description = models.TextField(blank=True, null=True, verbose_name='long description')
     additional_information = models.TextField(blank=True, null=True, verbose_name='additional information')
-    date_create = models.DateTimeField(auto_now=True, verbose_name='Creation Date')
+    date_create = models.DateTimeField(auto_now=True, auto_created=True, verbose_name='Creation Date')
 
     def __str__(self):
         return f"{self.id} | {self.name}"
-
-
 
     class Meta:
         verbose_name = 'Product'

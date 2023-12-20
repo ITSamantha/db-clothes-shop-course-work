@@ -19,11 +19,6 @@ class CartView(ListView):
     model = Cart
     context_object_name = 'products'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['shipping_price'] = random.randint(10, 100)
-        return context
-
     def get_queryset(self):
         return orders.utils.get_cart_products(self.request.user)
 
@@ -35,6 +30,8 @@ class CheckoutView(FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
+        context['products'] = orders.utils.get_cart_products(self.request.user)
+        context['shipping_price'] = random.randint(10, 100)
         return context
 
 

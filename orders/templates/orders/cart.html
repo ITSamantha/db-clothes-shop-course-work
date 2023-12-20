@@ -27,7 +27,8 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <div class="col-lg-8 table-responsive mb-5">
-                <table class="table table-bordered text-center mb-0">
+                {% if products %}
+                    <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
                     {% get_cart_table_header as headers %}
                     <tr>
@@ -37,66 +38,67 @@
                     </tr>
                     </thead>
                     <tbody class="align-middle">
-                    {% if products %}
-                        {% for product in products %}
-                            <tr id="{{ product.id }}">
-                                {% get_product_images product.product_size_color.product.id 1 as image %}
-                                <td class="align-middle">
-                                    <p><img src={{ image.0.image.url }} alt="image" style="width: 70px;"></p>
-                                </td>
-                                <td class="align-middle">
-                                    {{ product.product_size_color.product.name }}
-                                    <input type="hidden" value="{{ product.product_size_color.id }}"
-                                           id="product-id-{{ product.product_size_color.id }}">
-                                </td>
-                                <td class="align-middle">{{ product.product_size_color.size.name }}</td>
-                                <td class="align-middle">{{ product.product_size_color.color.name }}</td>
-                                <td class="align-middle">
-                                    {{ product.product_size_color.product.price }}
-                                    <input type="hidden" id="product-price-{{ product.product_size_color.id }}"
-                                           value="{{ product.product_size_color.product.price }}">
-                                </td>
-                                <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus minus"
-                                                    onclick="updateProductCount(event)"
-                                                    id="{{ product.product_size_color.id }}">
-                                                <i class="fa fa-minus minus"
-                                                   id="{{ product.product_size_color.id }}"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                               value="{{ product.quantity }}"
-                                               id="product-count-{{ product.product_size_color.id }}"
-                                               max="{{ product.product_size_color.count }}">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus plus"
-                                                    onclick="updateProductCount(event)"
-                                                    id="{{ product.product_size_color.id }}">
-                                                <i class="fa fa-plus plus" id="{{ product.product_size_color.id }}"></i>
-                                            </button>
-                                        </div>
+
+                    {% for product in products %}
+                        <tr id="{{ product.id }}">
+                            {% get_product_images product.product_size_color.product.id 1 as image %}
+                            <td class="align-middle">
+                                <p><img src={{ image.0.image.url }} alt="image" style="width: 70px;"></p>
+                            </td>
+                            <td class="align-middle">
+                                {{ product.product_size_color.product.name|truncatechars:30 }}
+                                <input type="hidden" value="{{ product.product_size_color.id }}"
+                                       id="product-id-{{ product.product_size_color.id }}">
+                            </td>
+                            <td class="align-middle">{{ product.product_size_color.size.name }}</td>
+                            <td class="align-middle">{{ product.product_size_color.color.name }}</td>
+                            <td class="align-middle">
+                                {{ product.product_size_color.product.price }}
+                                <input type="hidden" id="product-price-{{ product.product_size_color.id }}"
+                                       value="{{ product.product_size_color.product.price }}">
+                            </td>
+                            <td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-minus minus"
+                                                onclick="updateProductCount(event)"
+                                                id="{{ product.product_size_color.id }}">
+                                            <i class="fa fa-minus minus"
+                                               id="{{ product.product_size_color.id }}"></i>
+                                        </button>
                                     </div>
-                                </td>
-                                <td class="align-middle" id="product-total-{{ product.product_size_color.id }}">
-                                    <input type="hidden" value="{{ product.sum }}"
-                                           id="product-total-val-{{ product.product_size_color.id }}">
-                                    {{ product.sum }}$
-                                </td>
-                                <td class="align-middle">
-                                    <button class="btn btn-sm btn-primary remove"
-                                            id="{{ product.id }}"
-                                            onclick="removeProductFromCart(event)">
-                                        <i class="fa fa-times remove" id="{{ product.id }}"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
-                        <h4 class="font-weight-semi-bold m-0">This cart is empty.</h4>
-                    {% endif %}
-                    </tbody>
+                                    <input type="text" class="form-control form-control-sm bg-secondary text-center"
+                                           value="{{ product.quantity }}"
+                                           id="product-count-{{ product.product_size_color.id }}"
+                                           max="{{ product.product_size_color.count }}">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-plus plus"
+                                                onclick="updateProductCount(event)"
+                                                id="{{ product.product_size_color.id }}">
+                                            <i class="fa fa-plus plus" id="{{ product.product_size_color.id }}"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle" id="product-total-{{ product.product_size_color.id }}">
+                                <input type="hidden" value="{{ product.sum }}"
+                                       id="product-total-val-{{ product.product_size_color.id }}">
+                                {{ product.sum }}$
+                            </td>
+                            <td class="align-middle">
+                                <button class="btn btn-sm btn-primary remove"
+                                        id="{{ product.id }}"
+                                        onclick="removeProductFromCart(event)">
+                                    <i class="fa fa-times remove" id="{{ product.id }}"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <h4 class="font-weight-semi-bold m-0" style="font-size: 34px; text-align: center">The cart is
+                        empty.</h4>
+                {% endif %}
+                </tbody>
                 </table>
             </div>
             <div class="col-lg-4">
@@ -118,11 +120,6 @@
                             <h6 class="font-weight-medium" id="total-amount"></h6>
                             <input type="hidden" id="total-amount-price">
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium">{{ shipping_price }}$</h6>
-                            <input type="hidden" value="{{ shipping_price }}" id="total-shipping-price">
-                        </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
@@ -141,5 +138,6 @@
 
 {% block scripts %}
     <script src={% static "js/update_product_count.js" %}></script>
+    <script src={% static "js/update_total.js" %}></script>
     <script src={% static "js/remove_product_from_cart.js" %}></script>
 {% endblock %}

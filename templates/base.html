@@ -143,11 +143,7 @@
                 <div class="navbar-nav mr-auto py-0">
                     {% get_pages as pages %}
                     {% for page in pages %}
-                        {% if forloop.first %}
-                            <a href="{% url page.url %}" class="nav-item nav-link active">{{ page.title }}</a>
-                        {% else %}
-                            <a href="{% url page.url %}" class="nav-item nav-link">{{ page.title }}</a>
-                        {% endif %}
+                        <a href="{% url page.url %}" class="nav-item nav-link">{{ page.title }}</a>
                     {% endfor %}
                 </div>
                 <div class="navbar-nav ml-auto py-0">
