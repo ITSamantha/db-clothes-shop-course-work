@@ -6,8 +6,6 @@ from users.forms import RegistrationForm, LoginForm, ProfileForm
 from shop.forms import SubscribeForm
 
 
-# Create your views here.
-
 def login_user(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
@@ -18,7 +16,6 @@ def login_user(request):
             user = authenticate(request, username=username, password=password)
             if user and user.is_active:  # Block
                 login(request, user)
-                print(request.user)
                 return redirect('index')
     else:
         form = LoginForm()

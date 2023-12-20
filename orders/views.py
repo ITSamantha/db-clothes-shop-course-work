@@ -28,11 +28,14 @@ class CheckoutView(FormView):
     form_class = OrderForm
 
     def form_valid(self, form):
+        if not form.instance.cart:
+            return
         form.instance.user = self.request.user
         form.instance.status = Status.objects.get(name='Pending payment')
         form.save()
 
         orders.utils.reduce_products(self.request.user)
+
         messages.success(self.request, 'Your order has been successfully sent!')
         return render(self.request, self.template_name)
 

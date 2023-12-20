@@ -44,8 +44,8 @@ class Review(models.Model):
         MinValueValidator(0)
     ])
     description = models.TextField()
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     date = models.DateField(auto_now=True, auto_created=True)
 
     def __str__(self):
@@ -54,3 +54,4 @@ class Review(models.Model):
     class Meta:
         verbose_name = 'Review'
         verbose_name_plural = 'Reviews'
+        unique_together = ('user', 'product')

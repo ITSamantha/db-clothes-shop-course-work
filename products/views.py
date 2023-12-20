@@ -1,7 +1,7 @@
 import json
 
 from django.contrib import messages
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView, TemplateView
@@ -10,6 +10,8 @@ import products.utils
 from orders.models import Cart
 from products import utils
 from products.models import *
+from users.forms import ReviewForm
+from users.models import Review
 
 
 class ProductDetailView(DetailView):
@@ -17,6 +19,21 @@ class ProductDetailView(DetailView):
     template_name = 'products/detail.html'
     pk_url_kwarg = 'product_id'
     context_object_name = 'product'
+
+    def post(self, request, *args, **kwargs):
+        product_id = self.kwargs['product_id']
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            review = Review(user=request.user, product=Product.objects.get(id=product_id),
+                            description=cleaned_data['description'],
+                            rating=cleaned_data['rating'])
+            review.save()
+            messages.success(request, 'Thanks! Your review was successfully added!')
+            return redirect('products:product_details', product_id=product_id)
+        else:
+            messages.success(request, 'Oops! An error occured!')
+            return redirect('products:product_details', product_id=product_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,6 +44,9 @@ class ProductDetailView(DetailView):
         related_products = Product.objects.filter(productcategorygender__category__in=product_categories).exclude(
             id=product_id).distinct()
         context['products'] = related_products
+
+        if self.request.method == 'GET':
+            context['form'] = ReviewForm()
 
         return context
 
@@ -90,9 +110,9 @@ class IndexView(TemplateView):
 
 def filter_products(request):
     if request.method == 'GET':
-        colors = request.GET.get('colors')
-        categories = request.GET.get('categories')
-        sizes = request.GET.get('sizes')
+        colors = request.GET.getlist('colors')
+        categories = request.GET.getlist('categories')
+        sizes = request.GET.getlist('sizes')
 
         prods = products.utils.filter_products(colors, categories, sizes)
         context = {

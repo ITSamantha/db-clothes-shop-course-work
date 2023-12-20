@@ -50,12 +50,12 @@ def get_categories():
 
 
 @register.simple_tag()
-def get_product_size_color_count_info(product):
-    result = products.utils.get_product_size_color_count(product)
-    return result
-
-
-@register.simple_tag()
 def get_categories_counts():
     categories = products.utils.get_categories_counts()
     return categories
+
+
+@register.simple_tag()
+def get_product_reviews(product):
+    reviews = products.utils.get_product_reviews(product)
+    return reviews

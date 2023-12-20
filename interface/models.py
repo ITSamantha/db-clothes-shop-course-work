@@ -18,6 +18,7 @@ class Vendor(models.Model):
 
 class Feature(models.Model):
     name = models.CharField(max_length=64, unique=True, verbose_name='Feature')
+    style = models.CharField(max_length=64, verbose_name='Feature Style', default='fa fa-check')
 
     def __str__(self):
         return self.name

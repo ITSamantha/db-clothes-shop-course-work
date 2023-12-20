@@ -97,3 +97,23 @@ class ProfileForm(forms.ModelForm):
         model = User
         fields = ('image', 'first_name', 'last_name', 'username',
                   'email', 'sex', 'birthday', 'mobile_phone')
+
+
+class ReviewForm(forms.ModelForm):
+    description = forms.CharField(
+        label='Your Review *',
+        widget=forms.Textarea(attrs={'rows': 4, 'class': 'form-control', 'cols': 30}),
+        max_length=500,
+    )
+    rating = forms.DecimalField(
+        label='Your Rating',
+        min_value=0,
+        max_value=5,
+        decimal_places=1,
+        initial=5,
+        widget=forms.NumberInput(attrs={'step': 0.5, 'class': 'form-control'}),
+    )
+
+    class Meta:
+        model = Review
+        fields = ('rating', 'description')

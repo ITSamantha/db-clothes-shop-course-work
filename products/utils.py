@@ -1,6 +1,7 @@
 from django.db.models import Max, Min, F, Count, QuerySet, Q
 
 from products.models import *
+from users.models import Review
 
 
 def get_max_product_price():
@@ -31,13 +32,13 @@ def get_product_colors(product):
 
 def filter_products(colors=None, categories=None, sizes=None):
     filter_args = Q()
-    if colors is not None:
+    if colors:
         filter_args &= Q(productsizecolor__color__id__in=colors)
-    if categories is not None:
+    if categories:
         filter_args &= Q(productcategorygender__category__in=categories)
-    if sizes is not None:
+    if sizes:
         filter_args &= Q(productsizecolor__size__id__in=sizes)
-    products = Product.objects.filter(filter_args).distinct()
+    products = Product.objects.filter(filter_args).distinct() if filter_args else Product.objects.all()
     return products
 
 
@@ -87,3 +88,8 @@ def get_trendy_products_limited(limit=10):
 def get_categories():
     categories = Category.objects.all()
     return categories
+
+
+def get_product_reviews(product):
+    reviews = Review.objects.filter(product=product)
+    return reviews
