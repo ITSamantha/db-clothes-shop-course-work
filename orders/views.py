@@ -2,7 +2,7 @@ import json
 import random
 
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView, FormView
 
@@ -10,7 +10,7 @@ import dictionaries.topics
 import orders.utils
 import products.utils
 from orders.forms import OrderForm
-from orders.models import Cart
+from orders.models import Cart, Status
 from products.models import Category, ProductSizeColor
 
 
@@ -26,6 +26,19 @@ class CartView(ListView):
 class CheckoutView(FormView):
     template_name = 'orders/checkout.html'
     form_class = OrderForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.status = Status.objects.get(name='Pending payment')
+        form.save()
+
+        orders.utils.reduce_products(self.request.user)
+        messages.success(self.request, 'Your order has been successfully sent!')
+        return render(self.request, self.template_name)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Be careful while filling out the form!')
+        return render(self.request, self.template_name, {'form': form})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

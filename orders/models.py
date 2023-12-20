@@ -1,4 +1,7 @@
+import json
+
 from django.core.serializers import serialize, deserialize
+from django.core.serializers.json import DjangoJSONEncoder
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -51,6 +54,20 @@ class Cart(BaseProductList):
     def sum(self):
         return self.quantity * self.product_size_color.product.price
 
+    def serialize(self):
+        data = {
+            'id': self.id,
+            'quantity': self.quantity,
+            'created_at': self.created_at,
+            'product_size_color_id': self.product_size_color.id,
+        }
+        return data
+
+    @classmethod
+    def serialize_cart(cls, user):
+        cart_data = [cart.serialize() for cart in Cart.objects.filter(user=user)]
+        return cart_data
+
 
 class Favourites(BaseProductList):
     class Meta:
@@ -77,7 +94,8 @@ class Order(models.Model):
     payment_type = models.ForeignKey(PaymentType, on_delete=models.PROTECT, verbose_name='Payment Type')
 
     def save(self, *args, **kwargs):
-        cart_data = serialize('json', Cart.objects.filter(user=self.user))
+        cart_data = json.dumps(Cart.serialize_cart(self.user), cls=DjangoJSONEncoder)
+        print(cart_data)
         self.cart = cart_data
         super().save(*args, **kwargs)
 
@@ -87,3 +105,6 @@ class Order(models.Model):
         cart_queryset = [Cart(**cart_object['fields']) for cart_object in cart_objects]
 
         return cart_queryset
+
+    def __str__(self):
+        return f"{self.user} | {self.created} | {self.status}"

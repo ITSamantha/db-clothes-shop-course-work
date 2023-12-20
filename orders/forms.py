@@ -17,7 +17,7 @@ class OrderForm(forms.ModelForm):
     country_city = forms.ModelChoiceField(label='Country, City*',
                                           queryset=CountryCity.objects.all(),
                                           widget=forms.Select(attrs={'class': 'form-control'}),
-                                          empty_label='Not selected'
+                                          empty_label='Not selected', initial=0
                                           )
     address = forms.CharField(label='Address*', max_length=256, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Your Address'}))
@@ -26,7 +26,7 @@ class OrderForm(forms.ModelForm):
     payment_type = forms.ModelChoiceField(label='Payment Type*',
                                           queryset=PaymentType.objects.all(),
                                           widget=forms.Select(attrs={'class': 'form-control'}),
-                                          empty_label='Not selected'
+                                          empty_label='Not selected', initial=0,
                                           )
 
     class Meta:

@@ -25,17 +25,20 @@
             <div class="col-lg-8">
                 <div class="mb-4">
                     <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
-                    <div class="row">
-                        {% for f in form %}
-                            <div class="col-md-6 p-2 form-group" style="font-size: 20px;">
-                                <label>{{ f.label }}</label>
-                                {{ f }}
-                            </div>
-                        {% endfor %}
-                    </div>
+                    <form id="checkout-form" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            {% for f in form %}
+                                <div class="col-md-6 p-2 form-group" style="font-size: 20px;">
+                                    <label>{{ f.label }}</label>
+                                    {{ f }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% include 'includes/errors.html' %}
+                    </form>
                 </div>
-                <div class="collapse mb-4" id="shipping-address">
-                </div>
+                {% include 'includes/messages.html' %}
             </div>
             <div class="col-lg-4">
                 <div class="card border-secondary mb-5">
@@ -71,7 +74,9 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+                <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" onclick="submitForm()">Place
+                    Order
+                </button>
             </div>
         </div>
     </div>
@@ -79,6 +84,11 @@
 {% endblock %}
 
 {% block scripts %}
+    <script>
+        function submitForm() {
+            document.getElementById('checkout-form').submit();
+        }
+    </script>
     <script src={% static "js/checkout_subtotal.js" %}></script>
     <script src={% static "js/update_total.js" %}></script>
 {% endblock %}
