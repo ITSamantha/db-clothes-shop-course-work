@@ -10,5 +10,5 @@ urlpatterns = [
     path('product_details/<int:product_id>/size_details/', views.get_size_details, name='size_details'),
     path('category/<int:category>', views.product_category, name='product_category'),
     path('shop/', views.shop, name='shop'),
-    path('filter_products/', views.filter_products, name='filter_products'),
+    path('filter_products/', views.FilterProductsView.as_view(), name='filter_products'),
 ]

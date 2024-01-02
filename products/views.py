@@ -1,13 +1,9 @@
-import json
-
 from django.contrib import messages
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
-from django.views.generic import DetailView, TemplateView
-
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.views import View
+from django.views.generic import DetailView, TemplateView, ListView
 import products.utils
-from orders.models import Cart
 from products import utils
 from products.models import *
 from users.forms import ReviewForm
@@ -23,16 +19,17 @@ class ProductDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         product_id = self.kwargs['product_id']
         form = ReviewForm(request.POST)
-        if form.is_valid():
-            cleaned_data = form.cleaned_data
-            review = Review(user=request.user, product=Product.objects.get(id=product_id),
-                            description=cleaned_data['description'],
-                            rating=cleaned_data['rating'])
-            review.save()
-            messages.success(request, 'Thanks! Your review was successfully added!')
-            return redirect('products:product_details', product_id=product_id)
-        else:
-            messages.success(request, 'Oops! An error occured!')
+        try:
+            if form.is_valid():
+                cleaned_data = form.cleaned_data
+                review = Review(user=request.user, product=Product.objects.get(id=product_id),
+                                description=cleaned_data['description'],
+                                rating=cleaned_data['rating'])
+                review.save()
+                messages.success(request, 'Thanks! Your review was successfully added!')
+        except Exception as e:
+            messages.error(request, 'Oops! An error occured! You have already written your review.')
+        finally:
             return redirect('products:product_details', product_id=product_id)
 
     def get_context_data(self, **kwargs):
@@ -108,15 +105,15 @@ class IndexView(TemplateView):
         return context
 
 
-def filter_products(request):
-    if request.method == 'GET':
-        colors = request.GET.getlist('colors')
-        categories = request.GET.getlist('categories')
-        sizes = request.GET.getlist('sizes')
+class FilterProductsView(ListView):
+    model = Product
+    context_object_name = 'products'
+    template_name = 'products/includes/shop_products.html'
 
-        prods = products.utils.filter_products(colors, categories, sizes)
-        context = {
-            'products': prods,
-        }
-        return render(request, 'products/includes/shop_products.html', context=context)
-    return HttpResponse('Page not found')
+    def get_queryset(self):
+        if self.request.method == 'GET':
+            colors = self.request.GET.getlist('colors')
+            categories = self.request.GET.getlist('categories')
+            sizes = self.request.GET.getlist('sizes')
+            return products.utils.filter_products(colors, categories, sizes)
+        return None

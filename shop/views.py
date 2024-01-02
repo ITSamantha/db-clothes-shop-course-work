@@ -1,13 +1,8 @@
 from django.contrib import messages
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
-
-import dictionaries.topics
 from shop.forms import DemandForm
 
-
-# Create your views here.
 
 class ContactView(FormView):
     template_name = 'shop/contact.html'
@@ -16,11 +11,11 @@ class ContactView(FormView):
     def form_valid(self, form):
         form.save()
         messages.success(self.request, 'Your demand has been successfully sent!')
-        return render(self.request, self.template_name, {'form': DemandForm()})
+        return self.render_to_response(self.get_context_data(form=DemandForm()))
 
     def form_invalid(self, form):
         messages.error(self.request, 'Something went wrong!')
-        return render(self.request, self.template_name, {'form': form})
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class TopicView(TemplateView):

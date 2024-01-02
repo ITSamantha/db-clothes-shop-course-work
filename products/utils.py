@@ -81,7 +81,8 @@ def get_product_images(product_id):
 
 def get_trendy_products_limited(limit=10):
     # TODO: RATING
-    products = Product.objects.all()[:limit]
+    products = Product.objects.order_by('-review__rating')[:limit]
+    print(products)
     return products
 
 

@@ -19,3 +19,4 @@ def reduce_products(user):
         else:
             product.save()
     carts.delete()
+

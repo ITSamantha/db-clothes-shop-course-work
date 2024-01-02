@@ -28,8 +28,6 @@ class CheckoutView(FormView):
     form_class = OrderForm
 
     def form_valid(self, form):
-        if not form.instance.cart:
-            return
         form.instance.user = self.request.user
         form.instance.status = Status.objects.get(name='Pending payment')
         form.save()
@@ -108,3 +106,5 @@ def remove_product_from_cart(request):
     cart_id = int(data.get('cart'))
     Cart.objects.get(id=cart_id).delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+

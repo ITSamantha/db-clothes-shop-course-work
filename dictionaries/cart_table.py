@@ -8,3 +8,8 @@ CART_TABLE = [
     'Total',
     'Remove',
 ]
+
+ORDER_TABLE = [
+    'ID',
+    'STATUS',
+]

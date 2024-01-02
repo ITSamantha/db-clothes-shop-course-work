@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.core.validators import RegexValidator
 
@@ -12,7 +13,7 @@ class LoginForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'height:50px;'}))
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ('username', 'password')
 
 
@@ -57,7 +58,7 @@ class RegistrationForm(UserCreationForm):
                              required=False)
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ('username', 'first_name', 'last_name',
                   'email', 'password1', 'password2',
                   'sex', 'birthday', 'mobile_phone', 'image')
@@ -94,7 +95,7 @@ class ProfileForm(forms.ModelForm):
                                                                  'style': 'height:50px;'}), required=False)
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ('image', 'first_name', 'last_name', 'username',
                   'email', 'sex', 'birthday', 'mobile_phone')
 
